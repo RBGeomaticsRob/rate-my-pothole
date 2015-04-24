@@ -9,7 +9,7 @@
   </form>
 <% end %>
 <script>
-  var postLocationData = function(location) {
+  function postLocationData(location) {
     $.ajax({
       url: "/potholes",
       method: "post",
@@ -24,21 +24,21 @@
     });
   };
 
-  var addressToCoords = function(street, town) {
+  function addressToCoords(street, town) {
     $.ajax({
-      url: "https://maps.googleapis.com/maps/api/geocode/json",
-      data: {
-        address: street + '+' + town
-      },
-      success: function(data) {
-        postLocationData(data.results[0].geometry.location);
-      }
-    });
-  };
+        url: "https://maps.googleapis.com/maps/api/geocode/json",
+        data: {
+          address: street + '+' + town
+        },
+        success: function(data) {
+          postLocationData(data.results[0].geometry.location);
+        }
+      });
+    };
 
   $('.user-forms--report-pothole').on('submit', function(event) {
     event.preventDefault();
     addressToCoords($('#street-name').val(), $('#town-name').val());
     return false;
-});
+  });
 </script>

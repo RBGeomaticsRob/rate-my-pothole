@@ -11,3 +11,17 @@
 </div>
 <h2 class="homepage-header">Trending Potholes</h2>
 <%= erb :'potholes/_pothole_list', locals: { potholes: potholes } %>
+<script>
+  $(document).ready(function(){
+    $.ajax({
+      url: '/markers',
+      success: function(data){
+        for(var i = 0; i < data.length; i++) {
+          var pothole = data[i]
+          gmaps.markMapCoord(pothole.lat, pothole.lng)
+        }
+      }
+    });
+  });
+
+</script>

@@ -145,14 +145,12 @@ class RateMyPothole < Sinatra::Base
     erb :potholes_by_town
   end
 
-  get '/marks' do
+  get '/markers' do
     potholes = Pothole.all
-    puts potholes
-    hash = { potholes: [] }
-    potholes.each do |pothole|
-      hash[:data] << { location: pothole.location, lat: pothole.lat, lng: pothole.long }
+    pothole_locations = potholes.inject([]) do |array, pothole|
+      array << { location: pothole.location, lat: pothole.lat, lng: pothole.long }
     end
-    hash.to_json
+    pothole_locations.to_json
   end
 
   # start the server if ruby file executed directly
